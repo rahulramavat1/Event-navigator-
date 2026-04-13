@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ conference.name }} — {{ conference.tagline }}</title>
+    <meta name="description" content="Join us at {{ conference.name }} on {{ conference.date }} at {{ conference.venue }}. A 1-day technical conference on Google Cloud Technologies featuring 8 expert-led sessions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">☁️</span>
+                <span class="logo-text">GC Summit <span class="logo-year">'26</span></span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#schedule" class="nav-link">Schedule</a>
+                <a href="#speakers" class="nav-link">Speakers</a>
+                <a href="#venue" class="nav-link">Venue</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero-glow hero-glow-blue"></div>
+        <div class="hero-glow hero-glow-green"></div>
+        <div class="container hero-container">
+            <div class="hero-eyebrow">
+                <span class="hero-eyebrow-dot"></span>
+                <span>Google Cloud Developer Conference</span>
+                <span class="hero-eyebrow-sep">·</span>
+                <span>{{ conference.date }}</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="hero-title-sm">Summit</span>
+                <span class="hero-title-lg">Hyderabad</span>
+                <span class="hero-title-year">'26</span>
+            </h1>
+            <p class="hero-tagline">{{ conference.tagline }}</p>
+            <div class="hero-meta">
+                <span class="hero-meta-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="flex-shrink:0"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    {{ conference.venue }}
+                </span>
+                <span class="hero-meta-sep">·</span>
+                <span class="hero-meta-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="flex-shrink:0"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    {{ conference.start_time }} – {{ conference.end_time }}
+                </span>
+            </div>
+            <div class="hero-actions">
+                <a href="#schedule" class="btn btn-primary">
+                    View Schedule
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                </a>
+                <a href="#speakers" class="btn btn-ghost">Meet Speakers</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="stat-value">8</span>
+                    <span class="stat-label">Expert Sessions</span>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div class="hero-stat">
+                    <span class="stat-value">10</span>
+                    <span class="stat-label">Speakers</span>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div class="hero-stat">
+                    <span class="stat-value">6</span>
+                    <span class="stat-label">Tech Tracks</span>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div class="hero-stat">
+                    <span class="stat-value">1</span>
+                    <span class="stat-label">Full Day</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Schedule Section -->
+    <section class="section schedule-section" id="schedule">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Conference Program</span>
+                <h2 class="section-title">Schedule & Timetable</h2>
+                <p class="section-subtitle">Eight power-packed sessions from industry experts covering the latest in Google Cloud technologies</p>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="filters-bar" id="filtersBar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search talks, speakers, topics..." autocomplete="off">
+                    <button class="search-clear" id="searchClear" title="Clear search">&times;</button>
+                </div>
+                <div class="filter-chips">
+                    <button class="chip chip-active" data-category="all">All Sessions</button>
+                    {% for cat in categories %}
+                    <button class="chip" data-category="{{ cat }}">{{ cat }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline" id="timeline">
+                {% for talk in talks %}
+                {% if talk.slot == 5 %}
+                <!-- Lunch Break -->
+                <div class="timeline-item lunch-break" data-slot="lunch">
+                    <div class="timeline-time">
+                        <span class="time-start">12:15 PM</span>
+                        <span class="time-separator">–</span>
+                        <span class="time-end">01:15 PM</span>
+                    </div>
+                    <div class="timeline-connector">
+                        <div class="connector-dot lunch-dot">🍽️</div>
+                        <div class="connector-line"></div>
+                    </div>
+                    <div class="talk-card lunch-card">
+                        <div class="lunch-content">
+                            <h3 class="lunch-title">Lunch Break & Networking</h3>
+                            <p class="lunch-desc">Enjoy a catered lunch and connect with fellow attendees, speakers, and sponsors. Networking area on the mezzanine level.</p>
+                            <span class="lunch-duration">60 minutes</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="timeline-item" data-talk-id="{{ talk.id }}" data-slot="{{ talk.slot }}" data-categories="{{ talk.categories | join(',') }}">
+                    <div class="timeline-time">
+                        <span class="time-start">{{ talk.time_start }}</span>
+                        <span class="time-separator">–</span>
+                        <span class="time-end">{{ talk.time_end }}</span>
+                    </div>
+                    <div class="timeline-connector">
+                        <div class="connector-dot">{{ talk.slot }}</div>
+                        <div class="connector-line"></div>
+                    </div>
+                    <div class="talk-card" id="{{ talk.id }}">
+                        <div class="talk-card-header">
+                            <div class="talk-categories">
+                                {% for cat in talk.categories %}
+                                <span class="talk-cat cat-{{ cat | lower | replace(' ', '-') | replace('&', '') | replace('  ', '-') }}">{{ cat }}</span>
+                                {% endfor %}
+                            </div>
+                            <span class="talk-slot-badge">Session {{ talk.slot }}</span>
+                        </div>
+                        <h3 class="talk-title">{{ talk.title }}</h3>
+                        <p class="talk-description">{{ talk.description }}</p>
+                        <div class="talk-speakers">
+                            {% for sp in talk.speaker_details %}
+                            <a href="{{ sp.linkedin }}" target="_blank" rel="noopener" class="speaker-chip">
+                                <span class="speaker-avatar" style="background: {{ sp.avatar_color }}">{{ sp.first_name[0] }}{{ sp.last_name[0] }}</span>
+                                <span class="speaker-chip-info">
+                                    <span class="speaker-name">{{ sp.first_name }} {{ sp.last_name }}</span>
+                                    <span class="speaker-company">{{ sp.company }}</span>
+                                </span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- No Results -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <span class="no-results-icon">🔍</span>
+                <h3>No sessions found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+                <button class="btn btn-outline" id="resetFilters">Reset All Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speakers Section -->
+    <section class="section speakers-section" id="speakers">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Meet the Experts</span>
+                <h2 class="section-title">Our Speakers</h2>
+                <p class="section-subtitle">Industry leaders and Google Cloud experts sharing their knowledge and experience</p>
+            </div>
+            <div class="speakers-grid">
+                {% for sid, sp in speakers.items() %}
+                <div class="speaker-card" data-speaker-id="{{ sid }}">
+                    <div class="speaker-card-top">
+                        <div class="speaker-card-avatar" style="background: {{ sp.avatar_color }}">{{ sp.first_name[0] }}{{ sp.last_name[0] }}</div>
+                        <a href="{{ sp.linkedin }}" target="_blank" rel="noopener" class="speaker-li-icon" title="{{ sp.first_name }} on LinkedIn">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="speaker-card-name">{{ sp.first_name }} {{ sp.last_name }}</h3>
+                    <span class="speaker-card-role">{{ sp.role }}</span>
+                    <span class="speaker-card-company">{{ sp.company }}</span>
+                    <div class="speaker-card-talks">
+                        {% for talk in talks %}
+                        {% if sid in talk.speakers %}
+                        <span class="speaker-talk-tag">{{ talk.title | truncate(45) }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section class="section venue-section" id="venue">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Event Location</span>
+                <h2 class="section-title">Venue Details</h2>
+            </div>
+            <div class="venue-card">
+                <div class="venue-info">
+                    <h3 class="venue-name">{{ conference.venue }}</h3>
+                    <p class="venue-address">{{ conference.address }}</p>
+                    <div class="venue-details-grid">
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">📅</span>
+                            <div>
+                                <strong>Date</strong>
+                                <span>{{ conference.date }}</span>
+                            </div>
+                        </div>
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">🕘</span>
+                            <div>
+                                <strong>Time</strong>
+                                <span>{{ conference.start_time }} – {{ conference.end_time }}</span>
+                            </div>
+                        </div>
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">🍽️</span>
+                            <div>
+                                <strong>Lunch</strong>
+                                <span>{{ conference.lunch_start }} – {{ conference.lunch_end }}</span>
+                            </div>
+                        </div>
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">🎤</span>
+                            <div>
+                                <strong>Sessions</strong>
+                                <span>{{ conference.total_talks }} Expert-led Talks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="venue-map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2663824383895!2d78.3723!3d17.4575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dee68ab015%3A0xefebd6c6a27e26c!2sHyderabad%20International%20Convention%20Centre!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                        width="100%" height="300" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">☁️</span>
+                    <span class="footer-title">Google Cloud Summit Hyderabad 2026</span>
+                </div>
+                <p class="footer-copy">© 2026 Google Cloud Summit. All rights reserved. Built with ❤️ using Flask & vanilla JS.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- ========== Event Guide Chatbot Widget ========== -->
+    <div class="chatbot-widget" id="chatbotWidget">
+
+        <!-- Floating Toggle Button -->
+        <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Open Event Guide">
+            <span class="chat-icon-open" id="chatIconOpen" style="display:flex">💬</span>
+            <span class="chat-icon-close" id="chatIconClose" style="display:none">✕</span>
+            <span class="chat-notification-badge" id="chatBadge">1</span>
+        </button>
+
+        <!-- Chat Panel -->
+        <div class="chat-panel" id="chatPanel">
+
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="chat-bot-info">
+                    <div class="chat-bot-avatar">🤖</div>
+                    <div>
+                        <h3 class="chat-bot-name">Summit Guide</h3>
+                        <span class="chat-bot-status">● Always here to help</span>
+                    </div>
+                </div>
+                <button class="chat-close-btn" id="chatCloseBtn">✕</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="chat-tabs">
+                <button class="chat-tab active" data-tab="chat">💬 Chat</button>
+                <button class="chat-tab" data-tab="map">🗺️ Venue Map</button>
+                <button class="chat-tab" data-tab="qr">📱 QR Code</button>
+            </div>
+
+            <!-- Chat Tab -->
+            <div class="chat-tab-content active" id="tab-chat">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-quick-replies" id="chatQuickReplies"></div>
+                <div class="chat-input-bar">
+                    <input type="text" class="chat-input" id="chatInput"
+                           placeholder="Ask: restrooms, WiFi, schedule..."
+                           autocomplete="off" autocorrect="off">
+                    <button class="chat-send-btn" id="chatSendBtn" aria-label="Send">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Map Tab -->
+            <div class="chat-tab-content" id="tab-map">
+                <div class="floor-nav">
+                    <button class="floor-btn active" data-floor="ground">Ground</button>
+                    <button class="floor-btn" data-floor="floor1">Floor 1</button>
+                    <button class="floor-btn" data-floor="floor2">Floor 2</button>
+                    <button class="floor-btn" data-floor="basement">Basement</button>
+                </div>
+                <div class="floor-map-display" id="floorMapDisplay"></div>
+                <div class="map-legend">
+                    <span class="legend-item"><span class="legend-dot" style="background:#4285F4"></span>Sessions</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#FBBC05"></span>Food</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#00CEC9"></span>Facilities</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#34A853"></span>Entry</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#EA4335"></span>Emergency</span>
+                </div>
+            </div>
+
+            <!-- QR Tab -->
+            <div class="chat-tab-content" id="tab-qr">
+                <div class="qr-container">
+                    <div class="qr-code-wrapper">
+                        <img id="qrCodeImg" src="/api/qrcode" alt="QR Code to access on mobile">
+                        <div class="qr-fallback" id="qrFallback" style="display:none">
+                            <div style="font-size:3.5rem">📱</div>
+                            <p>Scan to access on mobile</p>
+                        </div>
+                    </div>
+                    <h3 class="qr-title">Open on Your Phone</h3>
+                    <p class="qr-subtitle">Scan this QR code to access the event guide on your mobile device — no app install needed!</p>
+                    <div class="qr-share-btn" onclick="if(navigator.share){navigator.share({title:'GC Summit Guide',url:window.location.href})}else{prompt('Copy this link:',window.location.href)}">📤 Share Link</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ========== End Chatbot Widget ========== -->
+
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>
