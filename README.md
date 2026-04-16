@@ -24,7 +24,7 @@ A dynamic web platform with schedule navigation, smart search, speaker profiles,
 ## 📁 Project Structure
 
 ```
-react hyderabad/
+/Event navigator
 ├── app.py                    # Flask application (routes, data models, API)
 ├── README.md                 # This file
 ├── requirements.txt          # Python dependencies
