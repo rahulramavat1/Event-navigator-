@@ -1,6 +1,6 @@
-# ☁️ Google Cloud Summit Hyderabad 2026
+# ☁️Event Navigator 
 
-A beautiful, dark-themed 1-day technical conference information website built with **Python/Flask** and vanilla **HTML, CSS, JavaScript**.
+A dynamic web platform with schedule navigation, smart search, speaker profiles, venue maps, and an AI assistant. Built on a lightweight Python/Flask backend with a glassmorphism dark mode frontend, it delivers a fast, premium event experience without heavy frameworks.
 
 ---
 
