@@ -188,8 +188,5 @@ curl "http://127.0.0.1:5000/api/talks?category=Security"
 curl "http://127.0.0.1:5000/api/talks?speaker=sp1"
 ```
 
----
 
-## 📄 License
 
-This project is for demonstration purposes. Feel free to modify and use.
